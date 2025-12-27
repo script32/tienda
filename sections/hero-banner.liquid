@@ -1,0 +1,107 @@
+<section class="hero-banner" data-section-id="{{ section.id }}" data-section-type="hero-banner">
+  <div class="hero-content">
+    {% if section.settings.image %}
+      <div class="hero-image" style="background-image: url({{ section.settings.image | img_url: '2000x' }});">
+    {% else %}
+      <div class="hero-image hero-placeholder">
+    {% endif %}
+        <div class="hero-overlay" style="opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};"></div>
+        <div class="container">
+          <div class="hero-text">
+            {% if section.settings.subtitle %}
+              <p class="hero-subtitle">{{ section.settings.subtitle }}</p>
+            {% endif %}
+            {% if section.settings.title %}
+              <h1 class="hero-title">{{ section.settings.title }}</h1>
+            {% endif %}
+            {% if section.settings.text %}
+              <div class="hero-description">{{ section.settings.text }}</div>
+            {% endif %}
+            {% if section.settings.button_label %}
+              <a href="{{ section.settings.button_link }}" class="hero-button btn btn-primary">
+                {{ section.settings.button_label }}
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero Banner",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background Image"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 30,
+      "unit": "%"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Welcome to"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "The Future of Technology"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Description",
+      "default": "<p>Discover the latest gadgets and innovative tech products</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Banner",
+      "category": "Promotional"
+    }
+  ]
+}
+{% endschema %}

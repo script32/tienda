@@ -1,0 +1,95 @@
+{
+  "general": {
+    "accessibility": {
+      "skip_to_content": "Saltar al contenido"
+    },
+    "meta": {
+      "tags": "Etiquetado \"{{ tags }}\"",
+      "page": "Página {{ page }}"
+    },
+    "404": {
+      "title": "404 - Página no encontrada",
+      "subtext": "La página que solicitaste no existe."
+    },
+    "breadcrumbs": {
+      "home": "Inicio"
+    },
+    "forms": {
+      "post_error": "Por favor corrija los errores a continuación:"
+    },
+    "search": {
+      "title": "Buscar",
+      "placeholder": "Buscar en nuestra tienda",
+      "submit": "Buscar",
+      "no_results": "No se encontraron resultados para \"{{ terms }}\"."
+    }
+  },
+  "products": {
+    "product": {
+      "sold_out": "Agotado",
+      "unavailable": "No disponible",
+      "vendor": "Marca",
+      "quantity": "Cantidad",
+      "add_to_cart": "Agregar al carrito",
+      "price": "Precio",
+      "compare_at": "Comparar en",
+      "sku": "SKU"
+    },
+    "collection": {
+      "all_products": "Todos los productos",
+      "no_products": "No hay productos en esta colección"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Carrito de compras",
+      "empty": "Tu carrito está vacío",
+      "continue_shopping": "Continuar comprando",
+      "subtotal": "Subtotal",
+      "total": "Total",
+      "checkout": "Finalizar compra",
+      "note": "Instrucciones especiales del pedido",
+      "taxes_and_shipping": "Impuestos y envío calculados al finalizar la compra",
+      "remove": "Eliminar",
+      "update": "Actualizar carrito"
+    }
+  },
+  "customer": {
+    "account": {
+      "title": "Cuenta",
+      "details": "Detalles de la cuenta",
+      "view_addresses": "Ver direcciones",
+      "return": "Volver a la cuenta"
+    },
+    "login": {
+      "title": "Iniciar sesión",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "forgot_password": "¿Olvidaste tu contraseña?",
+      "sign_in": "Iniciar sesión",
+      "create_account": "Crear cuenta"
+    },
+    "orders": {
+      "title": "Historial de pedidos",
+      "order_number": "Pedido",
+      "date": "Fecha",
+      "payment_status": "Estado del pago",
+      "fulfillment_status": "Estado del envío",
+      "total": "Total"
+    }
+  },
+  "layout": {
+    "navigation": {
+      "menu": "Menú"
+    },
+    "customer": {
+      "account": "Cuenta",
+      "log_out": "Cerrar sesión",
+      "log_in": "Iniciar sesión",
+      "create_account": "Crear cuenta"
+    },
+    "footer": {
+      "social_links": "Síguenos"
+    }
+  }
+}
