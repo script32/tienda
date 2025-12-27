@@ -142,7 +142,13 @@
       <div class="product-specs">
         <h2>Technical Specifications</h2>
         <div class="specs-grid">
-          {{ product.metafields.specs | json }}
+          {% comment %}
+            Display product specifications from metafields
+            Expected format: product.metafields.specs.processor, product.metafields.specs.memory, etc.
+          {% endcomment %}
+          <div class="spec-item">
+            <strong>Specifications available - configure in product metafields</strong>
+          </div>
         </div>
       </div>
     {% endif %}
