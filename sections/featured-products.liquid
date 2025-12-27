@@ -1,0 +1,159 @@
+<section class="featured-products" data-section-id="{{ section.id }}" data-section-type="featured-products">
+  <div class="container">
+    {% if section.settings.title %}
+      <div class="section-header">
+        <h2 class="section-title">{{ section.settings.title }}</h2>
+        {% if section.settings.description %}
+          <p class="section-description">{{ section.settings.description }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="product-grid">
+      {% if section.settings.collection %}
+        {% assign collection = collections[section.settings.collection] %}
+        {% for product in collection.products limit: section.settings.products_to_show %}
+          <div class="product-card">
+            <a href="{{ product.url }}" class="product-link">
+              <div class="product-image">
+                {% if product.featured_image %}
+                  <img src="{{ product.featured_image | img_url: '400x400' }}" 
+                       alt="{{ product.title | escape }}"
+                       loading="lazy">
+                {% else %}
+                  <div class="product-placeholder">
+                    {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                  </div>
+                {% endif %}
+                
+                {% if product.compare_at_price > product.price %}
+                  <span class="product-badge sale-badge">Sale</span>
+                {% endif %}
+                
+                {% unless product.available %}
+                  <span class="product-badge sold-out-badge">Sold Out</span>
+                {% endunless %}
+              </div>
+
+              <div class="product-info">
+                {% if section.settings.show_vendor and product.vendor %}
+                  <p class="product-vendor">{{ product.vendor }}</p>
+                {% endif %}
+                
+                <h3 class="product-title">{{ product.title }}</h3>
+                
+                <div class="product-price">
+                  {% if product.compare_at_price > product.price %}
+                    <span class="price-compare">{{ product.compare_at_price | money }}</span>
+                    <span class="price-sale">{{ product.price | money }}</span>
+                  {% else %}
+                    <span class="price-regular">{{ product.price | money }}</span>
+                  {% endif %}
+                </div>
+
+                {% if section.settings.show_rating %}
+                  <div class="product-rating">
+                    <span class="rating-stars">★★★★★</span>
+                    <span class="rating-count">({{ product.metafields.reviews.rating_count | default: 0 }})</span>
+                  </div>
+                {% endif %}
+              </div>
+            </a>
+
+            <div class="product-actions">
+              {% if product.available %}
+                <button type="button" 
+                        class="btn btn-primary quick-add-btn" 
+                        data-product-id="{{ product.id }}">
+                  Quick Add
+                </button>
+              {% else %}
+                <button type="button" class="btn btn-secondary" disabled>
+                  Sold Out
+                </button>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        {% for i in (1..section.settings.products_to_show) %}
+          <div class="product-card">
+            <div class="product-placeholder">
+              {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+            <div class="product-info">
+              <h3 class="product-title">Product {{ i }}</h3>
+              <p class="product-price">$99.99</p>
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    {% if section.settings.show_view_all and section.settings.collection %}
+      <div class="section-footer">
+        <a href="{{ collections[section.settings.collection].url }}" class="btn btn-secondary">
+          View All Products
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured Products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Featured Tech Products"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Section Description",
+      "default": "Explore our curated selection of the latest gadgets"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to Show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show Vendor",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show Product Rating",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show 'View All' Button",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Products",
+      "category": "Product"
+    }
+  ]
+}
+{% endschema %}

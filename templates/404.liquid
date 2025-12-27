@@ -1,0 +1,102 @@
+<div class="error-404">
+  <div class="container">
+    <div class="error-content">
+      <h1 class="error-title">404</h1>
+      <h2 class="error-subtitle">{{ 'general.404.title' | t }}</h2>
+      <p class="error-message">{{ 'general.404.subtext' | t }}</p>
+      
+      <div class="error-search">
+        <p>{{ 'general.search.title' | t }}:</p>
+        <form action="/search" method="get" class="search-form">
+          <input type="search" 
+                 name="q" 
+                 placeholder="{{ 'general.search.placeholder' | t }}" 
+                 class="search-input">
+          <button type="submit" class="btn btn-primary">{{ 'general.search.submit' | t }}</button>
+        </form>
+      </div>
+
+      <div class="error-actions">
+        <a href="/" class="btn btn-primary">{{ 'general.breadcrumbs.home' | t }}</a>
+        <a href="/collections/all" class="btn btn-secondary">{{ 'products.collection.all_products' | t }}</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .error-404 {
+    padding: 100px 0;
+    text-align: center;
+  }
+
+  .error-content {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .error-title {
+    font-size: 120px;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: 20px;
+    line-height: 1;
+  }
+
+  .error-subtitle {
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 15px;
+  }
+
+  .error-message {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 40px;
+  }
+
+  .error-search {
+    margin-bottom: 40px;
+  }
+
+  .error-search p {
+    font-weight: 600;
+    margin-bottom: 15px;
+  }
+
+  .error-search .search-form {
+    display: flex;
+    gap: 10px;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .error-search .search-input {
+    flex: 1;
+    padding: 12px 20px;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    font-size: 16px;
+  }
+
+  .error-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 768px) {
+    .error-title {
+      font-size: 80px;
+    }
+
+    .error-subtitle {
+      font-size: 24px;
+    }
+
+    .error-search .search-form {
+      flex-direction: column;
+    }
+  }
+</style>

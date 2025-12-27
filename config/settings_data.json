@@ -1,0 +1,32 @@
+{
+  "current": {
+    "color_primary": "#0066ff",
+    "color_secondary": "#00d4ff",
+    "color_accent": "#ff6b35",
+    "color_text": "#333333",
+    "color_background": "#ffffff",
+    "color_border": "#e0e0e0",
+    "font_size_base": 16,
+    "product_show_vendor": true,
+    "product_show_sku": true,
+    "product_show_quantity": true,
+    "product_show_share_buttons": true,
+    "cart_type": "drawer",
+    "cart_show_notes": true,
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {
+          "logo_width": 150,
+          "menu": "main-menu"
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "show_payment_icons": true
+        }
+      }
+    }
+  }
+}

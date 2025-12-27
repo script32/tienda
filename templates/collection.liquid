@@ -1,0 +1,121 @@
+<div class="collection-page">
+  <div class="container">
+    <div class="collection-header">
+      <h1 class="collection-title">{{ collection.title }}</h1>
+      {% if collection.description != blank %}
+        <div class="collection-description">{{ collection.description }}</div>
+      {% endif %}
+    </div>
+
+    <div class="collection-toolbar">
+      <div class="collection-count">
+        {{ collection.products_count }} products
+      </div>
+      
+      <div class="collection-sort">
+        <label for="sort-by">Sort by:</label>
+        <select id="sort-by" class="sort-select">
+          <option value="manual">Featured</option>
+          <option value="best-selling">Best Selling</option>
+          <option value="title-ascending">Alphabetically, A-Z</option>
+          <option value="title-descending">Alphabetically, Z-A</option>
+          <option value="price-ascending">Price, low to high</option>
+          <option value="price-descending">Price, high to low</option>
+          <option value="created-ascending">Date, old to new</option>
+          <option value="created-descending">Date, new to old</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="collection-grid">
+      {% for product in collection.products %}
+        <div class="product-card">
+          <a href="{{ product.url }}" class="product-link">
+            <div class="product-image">
+              {% if product.featured_image %}
+                <img src="{{ product.featured_image | img_url: '400x400' }}" 
+                     alt="{{ product.title | escape }}"
+                     loading="lazy">
+              {% else %}
+                <div class="product-placeholder">
+                  {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                </div>
+              {% endif %}
+              
+              {% if product.compare_at_price > product.price %}
+                <span class="product-badge sale-badge">Sale</span>
+              {% endif %}
+              
+              {% unless product.available %}
+                <span class="product-badge sold-out-badge">Sold Out</span>
+              {% endunless %}
+            </div>
+
+            <div class="product-info">
+              {% if product.vendor %}
+                <p class="product-vendor">{{ product.vendor }}</p>
+              {% endif %}
+              
+              <h3 class="product-title">{{ product.title }}</h3>
+              
+              <div class="product-price">
+                {% if product.compare_at_price > product.price %}
+                  <span class="price-compare">{{ product.compare_at_price | money }}</span>
+                  <span class="price-sale">{{ product.price | money }}</span>
+                {% else %}
+                  <span class="price-regular">{{ product.price | money }}</span>
+                {% endif %}
+              </div>
+            </div>
+          </a>
+
+          <div class="product-actions">
+            {% if product.available %}
+              <button type="button" 
+                      class="btn btn-primary quick-add-btn" 
+                      data-product-id="{{ product.id }}">
+                Quick Add
+              </button>
+            {% else %}
+              <button type="button" class="btn btn-secondary" disabled>
+                Sold Out
+              </button>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    {% if paginate.pages > 1 %}
+      <div class="pagination">
+        {% if paginate.previous %}
+          <a href="{{ paginate.previous.url }}" class="pagination-link">Previous</a>
+        {% endif %}
+
+        {% for part in paginate.parts %}
+          {% if part.is_link %}
+            <a href="{{ part.url }}" class="pagination-link">{{ part.title }}</a>
+          {% else %}
+            <span class="pagination-current">{{ part.title }}</span>
+          {% endif %}
+        {% endfor %}
+
+        {% if paginate.next %}
+          <a href="{{ paginate.next.url }}" class="pagination-link">Next</a>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  document.getElementById('sort-by').addEventListener('change', function() {
+    const url = new URL(window.location);
+    url.searchParams.set('sort_by', this.value);
+    window.location = url.toString();
+  });
+</script>
+
+{% paginate collection.products by 12 %}
+  {% comment %} Content is already rendered above {% endcomment %}
+{% endpaginate %}

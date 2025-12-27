@@ -1,0 +1,174 @@
+<div class="product-page" data-product-id="{{ product.id }}">
+  <div class="container">
+    <div class="product-layout">
+      <div class="product-gallery">
+        <div class="product-images">
+          {% if product.images.size > 0 %}
+            <div class="product-main-image">
+              <img src="{{ product.featured_image | img_url: '800x800' }}" 
+                   alt="{{ product.title | escape }}"
+                   id="product-featured-image">
+            </div>
+            
+            {% if product.images.size > 1 %}
+              <div class="product-thumbnails">
+                {% for image in product.images %}
+                  <button type="button" 
+                          class="thumbnail {% if forloop.first %}active{% endif %}"
+                          data-image="{{ image | img_url: '800x800' }}">
+                    <img src="{{ image | img_url: '100x100' }}" alt="{{ product.title | escape }}">
+                  </button>
+                {% endfor %}
+              </div>
+            {% endif %}
+          {% else %}
+            <div class="product-placeholder">
+              {{ 'product-1' | placeholder_svg_tag }}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="product-details">
+        {% if settings.product_show_vendor and product.vendor %}
+          <p class="product-vendor">{{ product.vendor }}</p>
+        {% endif %}
+
+        <h1 class="product-title">{{ product.title }}</h1>
+
+        {% if settings.product_show_sku and product.selected_or_first_available_variant.sku != blank %}
+          <p class="product-sku">SKU: {{ product.selected_or_first_available_variant.sku }}</p>
+        {% endif %}
+
+        <div class="product-price-wrapper">
+          <div class="product-price" data-price>
+            {% if product.compare_at_price > product.price %}
+              <span class="price-compare">{{ product.compare_at_price | money }}</span>
+              <span class="price-sale">{{ product.price | money }}</span>
+              <span class="price-save">Save {{ product.compare_at_price | minus: product.price | money }}</span>
+            {% else %}
+              <span class="price-regular">{{ product.price | money }}</span>
+            {% endif %}
+          </div>
+        </div>
+
+        {% if product.description != blank %}
+          <div class="product-description">
+            {{ product.description }}
+          </div>
+        {% endif %}
+
+        {% form 'product', product, class: 'product-form' %}
+          {% unless product.has_only_default_variant %}
+            <div class="product-variants">
+              {% for option in product.options_with_values %}
+                <div class="variant-option">
+                  <label>{{ option.name }}</label>
+                  <div class="variant-selectors">
+                    {% for value in option.values %}
+                      <input type="radio" 
+                             name="option-{{ option.name | handleize }}"
+                             value="{{ value | escape }}"
+                             id="option-{{ option.name | handleize }}-{{ value | handleize }}"
+                             {% if option.selected_value == value %}checked{% endif %}>
+                      <label for="option-{{ option.name | handleize }}-{{ value | handleize }}" class="variant-label">
+                        {{ value }}
+                      </label>
+                    {% endfor %}
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          {% endunless %}
+
+          <select name="id" class="product-variant-select" style="display:none;">
+            {% for variant in product.variants %}
+              <option value="{{ variant.id }}" 
+                      {% if variant == product.selected_or_first_available_variant %}selected{% endif %}
+                      {% unless variant.available %}disabled{% endunless %}>
+                {{ variant.title }} - {{ variant.price | money }}
+              </option>
+            {% endfor %}
+          </select>
+
+          {% if settings.product_show_quantity %}
+            <div class="product-quantity">
+              <label for="quantity">Quantity</label>
+              <div class="quantity-selector">
+                <button type="button" class="quantity-btn quantity-minus">-</button>
+                <input type="number" 
+                       name="quantity" 
+                       id="quantity" 
+                       value="1" 
+                       min="1"
+                       class="quantity-input">
+                <button type="button" class="quantity-btn quantity-plus">+</button>
+              </div>
+            </div>
+          {% else %}
+            <input type="hidden" name="quantity" value="1">
+          {% endif %}
+
+          <div class="product-actions">
+            <button type="submit" 
+                    class="btn btn-primary btn-add-to-cart"
+                    {% unless product.available %}disabled{% endunless %}>
+              {% if product.available %}
+                Add to Cart
+              {% else %}
+                Sold Out
+              {% endif %}
+            </button>
+          </div>
+
+          {% if settings.product_show_share_buttons %}
+            <div class="product-share">
+              <p>Share:</p>
+              <div class="share-buttons">
+                <a href="https://www.facebook.com/sharer.php?u={{ shop.url }}{{ product.url }}" 
+                   target="_blank" 
+                   class="share-btn">Facebook</a>
+                <a href="https://twitter.com/share?url={{ shop.url }}{{ product.url }}&text={{ product.title }}" 
+                   target="_blank" 
+                   class="share-btn">Twitter</a>
+              </div>
+            </div>
+          {% endif %}
+        {% endform %}
+      </div>
+    </div>
+
+    {% if product.metafields.specs %}
+      <div class="product-specs">
+        <h2>Technical Specifications</h2>
+        <div class="specs-grid">
+          {{ product.metafields.specs | json }}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  // Product image gallery
+  document.querySelectorAll('.thumbnail').forEach(thumb => {
+    thumb.addEventListener('click', function() {
+      const newImage = this.dataset.image;
+      document.getElementById('product-featured-image').src = newImage;
+      document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+
+  // Quantity selector
+  document.querySelector('.quantity-minus')?.addEventListener('click', function() {
+    const input = document.getElementById('quantity');
+    const value = parseInt(input.value);
+    if (value > 1) input.value = value - 1;
+  });
+
+  document.querySelector('.quantity-plus')?.addEventListener('click', function() {
+    const input = document.getElementById('quantity');
+    input.value = parseInt(input.value) + 1;
+  });
+</script>
