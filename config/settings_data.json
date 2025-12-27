@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
     "color_primary": "#0066ff",
@@ -17,16 +26,45 @@
       "header": {
         "type": "header",
         "settings": {
-          "logo_width": 150,
+          "logo": "shopify://shop_images/logo2.png",
+          "logo_width": 110,
           "menu": "main-menu"
         }
       },
       "footer": {
         "type": "footer",
         "settings": {
+          "show_logo": true,
+          "footer_text": "Your one-stop shop for the latest tech and gadgets.",
           "show_payment_icons": true
         }
+      },
+      "hero-banner": {
+        "type": "hero-banner",
+        "settings": {
+          "image": "shopify://shop_images/Banner.png",
+          "overlay_opacity": 45,
+          "subtitle": "",
+          "title": "",
+          "text": "",
+          "button_label": "Shop Now",
+          "button_link": "",
+          "text_alignment": "left"
+        }
+      },
+      "featured-products": {
+        "type": "featured-products",
+        "settings": {
+          "title": "Productos tecnológicos destacados",
+          "description": "Explora nuestra selección curada de los últimos gadgets.",
+          "collection": "frontpage",
+          "products_to_show": 7,
+          "show_vendor": false,
+          "show_rating": true,
+          "show_view_all": true
+        }
       }
-    }
+    },
+    "content_for_index": []
   }
 }
